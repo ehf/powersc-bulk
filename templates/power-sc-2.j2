@@ -1,0 +1,4 @@
+{% for result in ldap_uid_and_host.results %}
+{{ result.uid }} LDAP AZFLDAP1 "" "" "" ""
+{{ result.uid }} TOTP AZFTOTP1
+{% endfor %}

@@ -1,0 +1,34 @@
+--- 
+
+# ansible-playbook -i inventory.txt run-it.yml -u $USER -b --vault-password-file ~/.ogpw -vv
+
+- name: "collect users from ldap"
+  hosts: openldap_server
+  gather_facts: true
+  tasks:
+    - name: "LDAP search uid and host attrs"
+      community.general.ldap_search:
+        dn: "ou=People,{{ ldap_search_base }}"
+        scope: onelevel
+        attrs:
+          - uid
+        server_uri: "ldaps://{{ ldap_uri_host }}"
+        filter: "(&(objectClass=ldapPublicKey)(host=AIX))"
+        bind_dn: "{{ ldap_auth.bind_dn }}"
+        bind_pw: "{{ ldap_auth.bind_pw }}"
+        validate_certs: false
+      register: ldap_uid_and_host
+      tags:
+        - get-uid-and-host
+          
+    - name: "debug ldap_uid_and_host register"
+      debug: 
+        var: ldap_uid_and_host
+
+    - name: "create powersc bulk template"
+      ansible.builtin.template:
+        src: power-sc-2.j2
+        dest: ./out/power-sc-2.out
+      delegate_to: localhost
+      become: False
+

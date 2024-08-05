@@ -1,0 +1,8 @@
+userdev7 LDAP AZFLDAP1 "" "" "" ""
+userdev7 TOTP AZFTOTP1
+userdev8 LDAP AZFLDAP1 "" "" "" ""
+userdev8 TOTP AZFTOTP1
+userdev9 LDAP AZFLDAP1 "" "" "" ""
+userdev9 TOTP AZFTOTP1
+userdev10 LDAP AZFLDAP1 "" "" "" ""
+userdev10 TOTP AZFTOTP1
